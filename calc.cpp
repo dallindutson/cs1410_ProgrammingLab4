@@ -5,6 +5,8 @@
           functions to carry out these operations on two fraction objects.
  */
 #include <iostream>
+#include <climits>
+#include <string>
 #include "fraction.h"
 
 
@@ -19,36 +21,36 @@ int main() {
 
             std::cout << "A add\nS subtract\nM multiply\nD divide\nE exit\n"; // Menu
             std::cin >> menu;
-
+            
             if (menu == 'A' || menu == 'a') {
-                fract1.Read();
-                fract2.Read();
+                std::cin >> fract1;
+                std::cin >> fract2;
 
-                solution = fract1.Add(fract2);
-                solution.Print();
+                solution = fract1 + fract2;
+                std::cout << solution << " = " << fract1 << " + " << fract2 << std::endl;
             } else if (menu == 'S' || menu == 's') {
-                fract1.Read();
-                fract2.Read();
-                            
-                solution = fract1.Sub(fract2);
-                solution.Print();
+                std::cin >> fract1;
+                std::cin >> fract2;
+
+                solution = fract1 - fract2;
+                std::cout << solution << " = " << fract1 << " - " << fract2 << std::endl;
             } else if (menu == 'M' || menu == 'm') {
-                fract1.Read();
-                fract2.Read();
-                
-                solution = fract1.Mult(fract2);
-                solution.Print();
+                std::cin >> fract1;
+                std::cin >> fract2;
+
+                solution = fract1 * fract2;
+                std::cout << solution << " = " << fract1 << " * " << fract2 << std::endl;
             } else if (menu == 'D' || menu == 'd') {
-                fract1.Read();
-                fract2.Read();
-                
-                solution = fract1.Div(fract2);
-                solution.Print();
+                std::cin >> fract1;
+                std::cin >> fract2;
+
+                solution = fract1 / fract2;
+                std::cout << solution << " = " << fract1 << " / " << fract2 << std::endl;
             } else if (menu == 'E' || menu == 'e') {
                 running = false; // exit loop
                 std::cout << "Program closing...\n";
             } else {
-                std::cout << "Invalid selection, please try again\n";
+                throw "Invalid selection, please try again";
             }
         } catch (const char* err) {
             std::cin.clear(); // clear error
@@ -57,6 +59,12 @@ int main() {
             std::cout << "\n\nError: " << err << std::endl << std::endl;
         }
     } while (running);
+
+    Fraction test(8);
+    Fraction test2;
+
+    solution = test + test2;
+    std::cout << solution << " = " << test << " + " << test2 << std::endl;
 
     return 0;
 }

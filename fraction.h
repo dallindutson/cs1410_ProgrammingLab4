@@ -6,6 +6,8 @@
  */
 #pragma once
 
+#include <iostream>
+
 
 int gcd(int u, int v);
 
@@ -16,10 +18,10 @@ class Fraction {
 
     public:
         Fraction(int numerator = 0, int denominator = 1);
-        Fraction Add(Fraction rhs);
-        Fraction Sub(Fraction rhs);
-        Fraction Mult(Fraction rhs);
-        Fraction Div(Fraction rhs);
-        void Print();
-        void Read();
+        friend Fraction operator+(Fraction lhs, Fraction rhs);
+        friend Fraction operator-(Fraction lhs, Fraction rhs);
+        friend Fraction operator*(Fraction lhs, Fraction rhs);
+        friend Fraction operator/(Fraction lhs, Fraction rhs);
+        friend std::ostream& operator<<(std::ostream& os, Fraction& obj);
+        friend std::istream& operator>>(std::istream& is, Fraction& obj);
 };

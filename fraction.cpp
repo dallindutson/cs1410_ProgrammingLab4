@@ -16,65 +16,69 @@ Fraction::Fraction(int numerator, int denominator) : numerator(numerator), denom
 }
 
 // Add function for addition
-Fraction Fraction::Add(Fraction rhs) {
-    int newNumerator = (numerator * rhs.denominator) + (denominator * rhs.numerator); // cross-multiply and add numerators
-    int newDenominator = (denominator * rhs.denominator); // multiply denominators straight across
+Fraction operator+(Fraction lhs, Fraction rhs) {
+    int newNumerator = (lhs.numerator * rhs.denominator) + (lhs.denominator * rhs.numerator); // cross-multiply and add numerators
+    int newDenominator = (lhs.denominator * rhs.denominator); // multiply denominators straight across
     
     return Fraction(newNumerator, newDenominator); // automatically reduces answer
 }
 
 // Sub function for subtraction
-Fraction Fraction::Sub(Fraction rhs) {
-    int newNumerator = (numerator * rhs.denominator) - (denominator * rhs.numerator); // cross-multiply and subtract numerators
-    int newDenominator = (denominator * rhs.denominator); // multiply denominators straight across
+Fraction operator-(Fraction lhs, Fraction rhs) {
+    int newNumerator = (lhs.numerator * rhs.denominator) - (lhs.denominator * rhs.numerator); // cross-multiply and subtract numerators
+    int newDenominator = (lhs.denominator * rhs.denominator); // multiply denominators straight across
 
     return Fraction(newNumerator, newDenominator); 
 }
 
 // Mult function for multiplication
-Fraction Fraction::Mult(Fraction rhs) {
-    int newNumerator = (numerator * rhs.numerator); // multiply straight across
-    int newDenominator = (denominator * rhs.denominator); // multiply straight across
+Fraction operator*(Fraction lhs, Fraction rhs) {
+    int newNumerator = (lhs.numerator * rhs.numerator); // multiply straight across
+    int newDenominator = (lhs.denominator * rhs.denominator); // multiply straight across
 
     return Fraction(newNumerator, newDenominator);
 }
 
 // Div function to divide
-Fraction Fraction::Div(Fraction rhs) {
+Fraction operator/(Fraction lhs, Fraction rhs) {
     if (rhs.numerator == 0) {
         throw "Zero division error"; // throw zero division error
     }
 
-    int newNumerator = (numerator * rhs.denominator); // flip second fraction
-    int newDenominator = (denominator * rhs.numerator);
+    int newNumerator = (lhs.numerator * rhs.denominator); // flip second fraction
+    int newDenominator = (lhs.denominator * rhs.numerator);
 
     return Fraction(newNumerator, newDenominator);
 }
 
 // Print function to display results
-void Fraction::Print() {
-    if (denominator == 1) {
-        std::cout << "Solution: " << numerator << std::endl << std::endl; // if whole number, only output numerator
+std::ostream& operator<<(std::ostream& out, Fraction& obj) {
+    if (obj.denominator == 1) {
+        std::cout << obj.numerator; // if whole number, only output numerator
     } else {
-        std::cout << "Solution: " << numerator << "/" << denominator << std::endl << std::endl;
+        std::cout << obj.numerator << "/" << obj.denominator;
     }
+
+    return out;
 }
 
 // Read function for input
-void Fraction::Read() {
+std::istream& operator>>(std::istream& in, Fraction& obj) {
     std::cout << "Please enter a value for the numerator: ";
-    std::cin >> numerator;
+    std::cin >> obj.numerator;
     if (!std::cin) {
         throw "Invalid input!"; // throw error for invalid input
     } 
     
     std::cout << "Please enter a value for the denominator: ";
-    std::cin >> denominator;
+    std::cin >> obj.denominator;
     if (!std::cin) {
         throw "Invalid input!"; // throw error for invalid input
-    } else if (denominator == 0) {
+    } else if (obj.denominator == 0) {
         throw "The denominator cannot be 0"; // denominator cannot be zero
-    }    
+    }
+
+    return in;
 }
 
 // Euclid's Algorithm for finding the greatest common divisor
